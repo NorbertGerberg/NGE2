@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="header">
+      <UniqueIdentifier>{2e4c6d4e-c1b6-47eb-b0c0-afa2b65d132a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{69390705-1700-40bb-a4f4-5af482968591}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Audio.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSrc.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Gamepad.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderAPI.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Task.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Transformations.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewport2D.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewport3D.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Audio.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Gamepad.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Task.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewport2D.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewport3D.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
