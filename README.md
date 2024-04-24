@@ -1,5 +1,7 @@
 ![logo here](credit_display_alt.png)
 # Norbert's Game Engine 2
+[![Discord](https://img.shields.io/badge/NGE2-Discord-blue/1173276729436024842)](https://discord.com/invite/ynuWHpghBm)
+
 A collection of libraries for easy software and game development.
 
 ## Features
