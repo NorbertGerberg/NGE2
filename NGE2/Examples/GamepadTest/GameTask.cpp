@@ -14,7 +14,7 @@ bool GameTask::Initialize()
 
 	//	Create window
 	mWnd->SetSize(vec2i(width, height));
-	mWnd->SetTitle("ToyGame Project");
+	mWnd->SetTitle("Gamepad Test");
 	mWnd->Initialize();
 	mWnd->SetWindowVisibility(true);
 	mWnd->CenterWindow();
@@ -36,8 +36,23 @@ void GameTask::Update()
 	UpdateFixedTime();
 	while (mAccumulatedTime >= mFixedTime)
 	{
-		//	Fixed timestep
-		//	Update code here!
+		//----------------------------------------------------Gamepad Test
+		if (mGamepad->IsConnected(0))
+		{
+			eDeadzoneStick dz = mGamepad->DeadzoneCorrection();
+
+			if (dz.leftX >= 0.9f)
+				mGamepad->Vibration(0, 0, 20000);
+			else if (dz.leftX <= -0.9f)
+				mGamepad->Vibration(0, 20000, 0);
+			else
+				mGamepad->Vibration(0, 0, 0);
+
+			eGamepadLayout layout;
+			if (mGamepad->GetButtonPressed(layout.A))
+				mQuit = true;
+		}
+		//----------------------------------------------------End
 		PostUpdateFixedTime();
 	}
 }

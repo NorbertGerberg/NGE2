@@ -20,46 +20,33 @@ eDeadzoneStick eGamepad::DeadzoneCorrection()
 	real6 LY = mState.Gamepad.sThumbLY;
 
 	real6 magnitude = sqrt(LX * LX + LY * LY);
-
-	real6 normalizedLX = LX / magnitude;
-	real6 normalizedLY = LY / magnitude;
-	real6 normalizedMagnitude = 0;
+	real6 normalizedLX = 0.0;
+	real6 normalizedLY = 0.0;
 
 	if (magnitude > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 	{
-		if (magnitude > 32767) magnitude = 32767;
-		magnitude -= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
-		normalizedMagnitude = magnitude / (32767 - XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
-	}
-	else
-	{
-		magnitude = 0.0;
-		normalizedMagnitude = 0.0;
+		magnitude = max(0, magnitude - XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+		real6 normalizedMagnitude = magnitude / (32767.0 - XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+		normalizedLX = LX / 32767.0;
+		normalizedLY = LY / 32767.0;
 	}
 
 	real6 RX = mState.Gamepad.sThumbRX;
 	real6 RY = mState.Gamepad.sThumbRY;
 
 	real6 Rmagnitude = sqrt(RX * RX + RY * RY);
-
-	real6 normalizedRX = RX / Rmagnitude;
-	real6 normalizedRY = RY / Rmagnitude;
-	real6 RnormalizedMagnitude = 0;
+	real6 normalizedRX = 0.0;
+	real6 normalizedRY = 0.0;
 
 	if (Rmagnitude > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
 	{
-		if (Rmagnitude > 32767) Rmagnitude = 32767;
-		Rmagnitude -= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
-		RnormalizedMagnitude = Rmagnitude / (32767 - XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
-	}
-	else
-	{
-		Rmagnitude = 0.0;
-		RnormalizedMagnitude = 0.0;
+		Rmagnitude = max(0, Rmagnitude - XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+		real6 RnormalizedMagnitude = Rmagnitude / (32767.0 - XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+		normalizedRX = RX / 32767.0;
+		normalizedRY = RY / 32767.0;
 	}
 
-	//return { LX / normalizedMagnitude, LY / normalizedMagnitude, RX / RnormalizedMagnitude, RY / RnormalizedMagnitude };
-	return { LX / magnitude, LY / magnitude, RX / Rmagnitude, RY / Rmagnitude };
+	return { normalizedLX, normalizedLY, normalizedRX, normalizedRY };
 }
 
 void eGamepad::Vibration(ulong port, int leftmotorspeed, int rightmotorspeed)
@@ -77,32 +64,6 @@ bool eGamepad::GetButtonPressed(uint button)
 bool eGamepad::GetButtonReleased(uint button)
 {
 	return !(mState.Gamepad.wButtons & button);
-}
-
-bool eGamepad::CheckAxis(real3 DeadzoneStick, real3 axis)
-{
-	const real3& _Axis = std::clamp(DeadzoneStick, -5.0f, 5.0f);
-	real3 Axis;
-	if (_Axis <= 1.3f && _Axis >= 0.0f)
-		Axis = 5.0f;
-	else if (_Axis >= -1.3f && _Axis <= 0.0f)
-		Axis = -5.0f;
-	else
-		Axis = _Axis;
-
-	if (axis <= 0.0f)
-	{
-		if (Axis >= axis && Axis <= 0.0f)
-			return true;
-		return false;
-	}
-	else if (axis >= 0.0f)
-	{
-		if (Axis <= axis && Axis >= 0.0f)
-			return true;
-		return false;
-	}
-	return false;
 }
 
 sshort eGamepad::GetButtons()

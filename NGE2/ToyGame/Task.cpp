@@ -5,10 +5,12 @@
 
 bool eTask::SuperInit()
 {
-	mTime		= new eTime();
-	mGamepad	= new eGamepad();
-	mWnd		= new eWindow();
-	mAudio		= new eAudio();
+	mTime				= new eTime();
+	mGamepad			= new eGamepad();
+	mWnd				= new eWindow();
+	mAudio				= new eAudio();
+	mAccumulatedTime	= 0.0;
+	mFixedTime			= 0.01666667;		// ~60 FPS (1 / 60)
 	return mAudio->Initialize();
 }
 
@@ -25,6 +27,9 @@ void eTask::SuperUnload()
 
 	if (mAudio != nullptr)
 		delete mAudio;
+
+	mAccumulatedTime	= 0.0;
+	mFixedTime			= 0.0;
 }
 
 eTime* eTask::GetTime()
@@ -45,4 +50,19 @@ eGamepad* eTask::GetGamepad()
 eAudio* eTask::GetAudio()
 {
 	return mAudio;
+}
+
+void eTask::SetFixedTime(const real6 framerate)
+{
+	mFixedTime = (1.0 / framerate);
+}
+
+void eTask::UpdateFixedTime()
+{
+	mAccumulatedTime += mTime->DeltaTime();
+}
+
+void eTask::PostUpdateFixedTime()
+{
+	mAccumulatedTime -= mFixedTime;
 }

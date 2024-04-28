@@ -8,6 +8,7 @@
 #include <Task.hpp>
 
 class GameRenderer;
+class eTexture;
 
 class GameTask : public eTask
 {
@@ -22,5 +23,9 @@ public:
 private:
 	real3			mGameSpeed;
 	GameRenderer*	mRenderer;
+
+	//----------------------------------------------------Atlas example
+	eTexture*		mTexture;
+	//----------------------------------------------------End
 };
 #endif

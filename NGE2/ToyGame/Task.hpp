@@ -25,10 +25,17 @@ public:
 	eGamepad*	GetGamepad();
 	eAudio*		GetAudio();
 
+	void		SetFixedTime(const real6 framerate);
+	void		UpdateFixedTime();
+	void		PostUpdateFixedTime();
+
 protected:
 	eTime*		mTime;
 	eWindow*	mWnd;
 	eGamepad*	mGamepad;
 	eAudio*		mAudio;
+
+	real6		mAccumulatedTime;
+	real6		mFixedTime;
 };
 #endif

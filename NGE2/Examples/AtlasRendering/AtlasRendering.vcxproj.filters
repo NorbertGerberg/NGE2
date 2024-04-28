@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{3bd9ead3-1dbd-4426-8805-0709dc21d81c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="header">
       <UniqueIdentifier>{f8e7bb25-e3ad-457a-a37f-5507851b086a}</UniqueIdentifier>
     </Filter>
     <Filter Include="shared">
       <UniqueIdentifier>{b4aa2f06-b4d5-4703-a03a-c3de0aa30db2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source">
-      <UniqueIdentifier>{3bd9ead3-1dbd-4426-8805-0709dc21d81c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

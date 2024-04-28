@@ -125,15 +125,20 @@ void GameTask::Update()
 	mTime->Update();
 	mQuit = mWnd->WindowCloseRequested();
 
-	//----------------------------------------------------3D Test
-	mMat->Update(mTime->DeltaTime());
+	UpdateFixedTime();
+	while (mAccumulatedTime >= mFixedTime)
+	{
+		//----------------------------------------------------3D Test
+		mMat->Update(mTime->DeltaTime());
 
-	mWnd->GetMouse()->SetInputMode(NGE_INPUT_CURSOR, mWnd->GetMouse()->GetButtonPressed(NGE_INPUT_MOUSE_BUTTON_RIGHT) ? NGE_INPUT_CURSOR_DISABLED : NGE_INPUT_CURSOR_NORMAL);
-	mWnd->GetMouse()->SetPositionCallback(mWnd->GetMouse()->GetButtonPressed(NGE_INPUT_MOUSE_BUTTON_RIGHT) ? mouse_callback : nullptr);
+		mWnd->GetMouse()->SetInputMode(NGE_INPUT_CURSOR, mWnd->GetMouse()->GetButtonPressed(NGE_INPUT_MOUSE_BUTTON_RIGHT) ? NGE_INPUT_CURSOR_DISABLED : NGE_INPUT_CURSOR_NORMAL);
+		mWnd->GetMouse()->SetPositionCallback(mWnd->GetMouse()->GetButtonPressed(NGE_INPUT_MOUSE_BUTTON_RIGHT) ? mouse_callback : nullptr);
 
-	if (mWnd->GetMouse()->GetButtonPressed(NGE_INPUT_MOUSE_BUTTON_RIGHT))
-		mViewport->SetFirstMouse();
-	//----------------------------------------------------End
+		if (mWnd->GetMouse()->GetButtonPressed(NGE_INPUT_MOUSE_BUTTON_RIGHT))
+			mViewport->SetFirstMouse();
+		//----------------------------------------------------End
+		PostUpdateFixedTime();
+	}
 }
 
 void GameTask::Render()

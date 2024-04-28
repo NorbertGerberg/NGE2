@@ -80,6 +80,14 @@ void GameTask::Update()
 {
 	mTime->Update();
 	mQuit = mWnd->WindowCloseRequested();
+
+	UpdateFixedTime();
+	while (mAccumulatedTime >= mFixedTime)
+	{
+		//	Fixed timestep
+		//	Update code here!
+		PostUpdateFixedTime();
+	}
 }
 
 void GameTask::Render()

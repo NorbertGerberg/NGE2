@@ -42,7 +42,6 @@ public:
 	void Vibration(ulong port, int leftmotorspeed, int rightmotorspeed);
 	bool GetButtonPressed(uint button);
 	bool GetButtonReleased(uint button);
-	bool CheckAxis(real3 DeadzoneStick, real3 axis);
 	sshort GetButtons();
 	short GetThumbLX();
 	short GetThumbLY();
