@@ -16,6 +16,13 @@ GameRenderer::GameRenderer(eWindow* window, uint32 width, uint32 height, bool vs
 	shd->InitUniform("s_texColor", eUniformType::Sampler);
 	shd = nullptr;
 
+	//mGfx->CompileShader("Text2D");
+	PushShader("Text2D");
+	shd = GetShader("Text2D");
+	shd->InitUniform("atlasInfo", eUniformType::Vec4, 2);
+	shd->InitUniform("s_texColor", eUniformType::Sampler);
+	shd = nullptr;
+
 	//	Init Layers
 	PushLayer("2D", false);
 	m2DPass = GetLayer("2D");

@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AtlasRendering", "Examples\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GamepadTest", "Examples\GamepadTest\GamepadTest.vcxproj", "{6A0181E3-1197-4480-AB02-DF882EF7DEFC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextRendering", "Examples\TextRendering\TextRendering.vcxproj", "{A6FFF0FF-439E-4E36-9914-5782B5D181C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -103,6 +105,10 @@ Global
 		{6A0181E3-1197-4480-AB02-DF882EF7DEFC}.Debug|x64.Build.0 = Debug|x64
 		{6A0181E3-1197-4480-AB02-DF882EF7DEFC}.Release|x64.ActiveCfg = Release|x64
 		{6A0181E3-1197-4480-AB02-DF882EF7DEFC}.Release|x64.Build.0 = Release|x64
+		{A6FFF0FF-439E-4E36-9914-5782B5D181C9}.Debug|x64.ActiveCfg = Debug|x64
+		{A6FFF0FF-439E-4E36-9914-5782B5D181C9}.Debug|x64.Build.0 = Debug|x64
+		{A6FFF0FF-439E-4E36-9914-5782B5D181C9}.Release|x64.ActiveCfg = Release|x64
+		{A6FFF0FF-439E-4E36-9914-5782B5D181C9}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,6 +129,7 @@ Global
 		{B674E6A3-3CD3-4A23-9EE3-7F34C2AAD450} = {433A860F-1EB6-4C5E-907D-A9EE0F7E6B13}
 		{9E73A4F0-8E93-4FB0-AD94-FDFFEA78AA86} = {433A860F-1EB6-4C5E-907D-A9EE0F7E6B13}
 		{6A0181E3-1197-4480-AB02-DF882EF7DEFC} = {433A860F-1EB6-4C5E-907D-A9EE0F7E6B13}
+		{A6FFF0FF-439E-4E36-9914-5782B5D181C9} = {433A860F-1EB6-4C5E-907D-A9EE0F7E6B13}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCE68221-412F-4C91-9524-8A3640C792A5}

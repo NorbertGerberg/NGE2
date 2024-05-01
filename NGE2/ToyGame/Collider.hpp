@@ -30,5 +30,12 @@ namespace eCollider
 		vec2	mPos;
 		real3	mRadius;
 	};
+
+	struct eOBB
+	{
+		vec3 mCenter;
+		vec3 mAxes[3];	//	Three axes of the OBB (normalized) (radians)
+		vec3 mExtents;	//	Half-lengths along each axis
+	};
 }
 #endif

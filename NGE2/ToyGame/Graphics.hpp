@@ -74,6 +74,7 @@ public:
 	void ResetAtlasShader(eShader* shader);
 	void Draw3D(eShader* shader, eLayer* layer, eTransformation3D transformation, eTexture* texture);
 	void DrawBillboard(eShader* shader, eLayer* layer, eTransformation3D transformation, eTexture* texture);
+	void DrawText(eShader* shader, eLayer* layer, eViewport2D vp, eTransformation2D transformation, eTextAtlas& atlas, eString text);
 
 	bool CompileShader(eString name);
 

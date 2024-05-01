@@ -121,3 +121,55 @@ eCollisionSide eCollision::GetCollisionSide2D(const eCollider::eAABB2D& box, con
 
 	return eCollisionSide::eCsNone;
 }
+
+const bool eCollision::OBBInOBB(const eCollider::eOBB& obb, const eCollider::eOBB& obb2)
+{
+	mat3 axes1	= mat3(obb.mAxes[0], obb.mAxes[1], obb.mAxes[2]);
+	mat3 axes2	= mat3(obb2.mAxes[0], obb2.mAxes[1], obb2.mAxes[2]);
+	mat3 axes	= eMath::transpose(axes1) * axes2;
+
+	vec3 translation = obb2.mCenter - obb.mCenter;
+
+	for (int i = 0; i < 3; i++)
+	{
+		real3 t = eMath::dot(translation, axes[i]);
+
+		real3 obb1Proj = eMath::dot(glm::abs(obb.mAxes[i]), obb.mExtents);
+		real3 obb2Proj = eMath::dot(glm::abs(obb2.mAxes[i]), obb2.mExtents);
+
+		if (eMath::abs(t) > obb1Proj + obb2Proj)
+			return false;
+	}
+
+	axes = eMath::transpose(axes2) * axes1;
+
+	for (int i = 0; i < 3; i++)
+	{
+		real3 t = eMath::dot(translation, axes[i]);
+
+		real3 obb1Proj = eMath::dot(glm::abs(obb.mAxes[i]), obb.mExtents);
+		real3 obb2Proj = eMath::dot(glm::abs(obb2.mAxes[i]), obb2.mExtents);
+
+		if (eMath::abs(t) > obb1Proj + obb2Proj)
+			return false;
+	}
+
+	return true;
+}
+
+eCollider::eOBB eCollision::AABBToOBB(const eCollider::eAABB& box)
+{
+	eCollider::eOBB obb;
+	obb.mCenter		= (box.mMin + box.mMax) * 0.5f;
+	obb.mExtents	= (box.mMax - box.mMin) * 0.5f;
+	obb.mAxes[0]	= vec3(1.0f, 0.0f, 0.0f);
+	obb.mAxes[1]	= vec3(0.0f, 1.0f, 0.0f);
+	obb.mAxes[2]	= vec3(0.0f, 0.0f, 1.0f);
+	return obb;
+}
+
+const bool eCollision::AABBInOBB(const eCollider::eAABB& box, const eCollider::eOBB& obb)
+{
+	eCollider::eOBB obb2 = AABBToOBB(box);
+	return OBBInOBB(obb, obb2);
+}

@@ -21,6 +21,12 @@ struct eTextureAtlas
 	eTexture* mTexture = nullptr;
 };
 
+struct eTextAtlas
+{
+	eTextureAtlas	mAtlas;
+	vec2			mSpace;
+};
+
 struct eTextureData
 {
 	unsigned char*  mData;

@@ -222,6 +222,133 @@ void eGraphics::ReleaseBillboard()
 	Destroy(mVbhBillboard);
 }
 
+void eGraphics::DrawText(eShader* shader, eLayer* layer, eViewport2D vp, eTransformation2D transformation,
+	eTextAtlas& atlas, eString text)
+{
+	eTransformation2D trans = transformation;
+	strg stext = text.GetStrg();
+	for (auto& it : stext)
+	{
+		vec2 subImg = vec2(0.0f);
+		switch (it)
+		{
+			case 'b': { subImg.x = 1.0f; }break;
+			case 'c': { subImg.x = 2.0f; }break;
+			case 'd': { subImg.x = 3.0f; }break;
+			case 'e': { subImg.x = 4.0f; }break;
+			case 'f': { subImg.x = 5.0f; }break;
+			case 'g': { subImg.x = 6.0f; }break;
+			case 'h': { subImg.x = 7.0f; }break;
+			case 'i': { subImg.x = 8.0f; }break;
+			case 'j': { subImg.x = 9.0f; }break;
+			case 'k': { subImg.x = 10.0f; }break;
+			case 'l': { subImg.x = 11.0f; }break;
+			case 'm': { subImg.x = 12.0f; }break;
+			case 'n': { subImg.x = 13.0f; }break;
+			case 'o': { subImg.x = 14.0f; }break;
+			case 'p': { subImg.x = 15.0f; }break;
+			case 'q': { subImg.x = 16.0f; }break;
+			case 'r': { subImg.x = 17.0f; }break;
+			case 's': { subImg.x = 18.0f; }break;
+			case 't': { subImg.x = 19.0f; }break;
+			case 'u': { subImg.x = 20.0f; }break;
+			case 'v': { subImg.x = 21.0f; }break;
+			case 'w': { subImg.x = 22.0f; }break;
+			case 'x': { subImg.x = 23.0f; }break;
+			case 'y': { subImg.x = 24.0f; }break;
+			case 'z': { subImg.x = 25.0f; }break;
+			case 'ü': { subImg.x = 26.0f; }break;
+			case 'ä': { subImg.x = 27.0f; }break;
+			case 'ö': { subImg.x = 28.0f; }break;
+			case 'A': { subImg = vec2(0.0f, 1.0f); }break;
+			case 'B': { subImg = vec2(1.0f, 1.0f); }break;
+			case 'C': { subImg = vec2(2.0f, 1.0f); }break;
+			case 'D': { subImg = vec2(3.0f, 1.0f); }break;
+			case 'E': { subImg = vec2(4.0f, 1.0f); }break;
+			case 'F': { subImg = vec2(5.0f, 1.0f); }break;
+			case 'G': { subImg = vec2(6.0f, 1.0f); }break;
+			case 'H': { subImg = vec2(7.0f, 1.0f); }break;
+			case 'I': { subImg = vec2(8.0f, 1.0f); }break;
+			case 'J': { subImg = vec2(9.0f, 1.0f); }break;
+			case 'K': { subImg = vec2(10.0f, 1.0f); }break;
+			case 'L': { subImg = vec2(11.0f, 1.0f); }break;
+			case 'M': { subImg = vec2(12.0f, 1.0f); }break;
+			case 'N': { subImg = vec2(13.0f, 1.0f); }break;
+			case 'O': { subImg = vec2(14.0f, 1.0f); }break;
+			case 'P': { subImg = vec2(15.0f, 1.0f); }break;
+			case 'Q': { subImg = vec2(16.0f, 1.0f); }break;
+			case 'R': { subImg = vec2(17.0f, 1.0f); }break;
+			case 'S': { subImg = vec2(18.0f, 1.0f); }break;
+			case 'T': { subImg = vec2(19.0f, 1.0f); }break;
+			case 'U': { subImg = vec2(20.0f, 1.0f); }break;
+			case 'V': { subImg = vec2(21.0f, 1.0f); }break;
+			case 'W': { subImg = vec2(22.0f, 1.0f); }break;
+			case 'X': { subImg = vec2(23.0f, 1.0f); }break;
+			case 'Y': { subImg = vec2(24.0f, 1.0f); }break;
+			case 'Z': { subImg = vec2(25.0f, 1.0f); }break;
+			case 'Ü': { subImg = vec2(26.0f, 1.0f); }break;
+			case 'Ä': { subImg = vec2(27.0f, 1.0f); }break;
+			case 'Ö': { subImg = vec2(28.0f, 1.0f); }break;
+			case '0': { subImg = vec2(0.0f, 2.0f); }break;
+			case '1': { subImg = vec2(1.0f, 2.0f); }break;
+			case '2': { subImg = vec2(2.0f, 2.0f); }break;
+			case '3': { subImg = vec2(3.0f, 2.0f); }break;
+			case '4': { subImg = vec2(4.0f, 2.0f); }break;
+			case '5': { subImg = vec2(5.0f, 2.0f); }break;
+			case '6': { subImg = vec2(6.0f, 2.0f); }break;
+			case '7': { subImg = vec2(7.0f, 2.0f); }break;
+			case '8': { subImg = vec2(8.0f, 2.0f); }break;
+			case '9': { subImg = vec2(9.0f, 2.0f); }break;
+			case ',': { subImg = vec2(10.0f, 2.0f); }break;
+			case ';': { subImg = vec2(11.0f, 2.0f); }break;
+			case '.': { subImg = vec2(12.0f, 2.0f); }break;
+			case ':': { subImg = vec2(13.0f, 2.0f); }break;
+			case '-': { subImg = vec2(14.0f, 2.0f); }break;
+			case '_': { subImg = vec2(15.0f, 2.0f); }break;
+			case '`': { subImg = vec2(16.0f, 2.0f); }break;
+			case '´': { subImg = vec2(17.0f, 2.0f); }break;
+			case '<': { subImg = vec2(18.0f, 2.0f); }break;
+			case '>': { subImg = vec2(19.0f, 2.0f); }break;
+			case '|': { subImg = vec2(20.0f, 2.0f); }break;
+			case '!': { subImg = vec2(21.0f, 2.0f); }break;
+			case '"': { subImg = vec2(22.0f, 2.0f); }break;
+			case '§': { subImg = vec2(23.0f, 2.0f); }break;
+			case '$': { subImg = vec2(24.0f, 2.0f); }break;
+			case '%': { subImg = vec2(25.0f, 2.0f); }break;
+			case '&': { subImg = vec2(26.0f, 2.0f); }break;
+			case '/': { subImg = vec2(27.0f, 2.0f); }break;
+			case '(': { subImg = vec2(28.0f, 2.0f); }break;
+			case ')': { subImg = vec2(0.0f, 3.0f); }break;
+			case '=': { subImg = vec2(1.0f, 3.0f); }break;
+			case '?': { subImg = vec2(2.0f, 3.0f); }break;
+			case '\\': { subImg = vec2(3.0f, 3.0f); }break;
+			case '}': { subImg = vec2(4.0f, 3.0f); }break;
+			case '{': { subImg = vec2(5.0f, 3.0f); }break;
+			case ']': { subImg = vec2(6.0f, 3.0f); }break;
+			case '[': { subImg = vec2(7.0f, 3.0f); }break;
+			case '€': { subImg = vec2(8.0f, 3.0f); }break;
+			case '@': { subImg = vec2(9.0f, 3.0f); }break;
+			case '#': { subImg = vec2(10.0f, 3.0f); }break;
+			case '\'': { subImg = vec2(11.0f, 3.0f); }break;
+			case '+': { subImg = vec2(12.0f, 3.0f); }break;
+			case '~': { subImg = vec2(13.0f, 3.0f); }break;
+			case '*': { subImg = vec2(14.0f, 3.0f); }break;
+			case '^': { subImg = vec2(15.0f, 3.0f); }break;
+			case '°': { subImg = vec2(16.0f, 3.0f); }break;
+			case ' ': { trans.mPosition.x += trans.mScale.x * atlas.mSpace.x; continue; }break;
+			case '\n':
+			{
+				trans.mPosition.x = transformation.mPosition.x;
+				trans.mPosition.y += trans.mScale.y * atlas.mSpace.y;
+				continue;
+			}break;
+		}
+		Draw2DAtlas(shader, layer, vp, trans, atlas.mAtlas, subImg);
+		trans.mPosition.x += trans.mScale.x * atlas.mSpace.x;
+	}
+	ResetAtlasShader(shader);
+}
+
 void eGraphics::Init2D()
 {
 	static eQuadVertex quadVertices[] = {
