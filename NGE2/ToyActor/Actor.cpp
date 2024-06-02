@@ -41,7 +41,10 @@ void eActor::Update()
 			if (it->CanUpdate())
 			{
 				if (it->IsAwake())
+				{
+					it->mAlarm->Update();
 					it->Update();
+				}
 			}
 		}
 	}

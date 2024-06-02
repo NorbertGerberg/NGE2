@@ -27,6 +27,9 @@
     <ClInclude Include="Scene.hpp">
       <Filter>header</Filter>
     </ClInclude>
+    <ClInclude Include="Alarm.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -42,6 +45,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Alarm.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

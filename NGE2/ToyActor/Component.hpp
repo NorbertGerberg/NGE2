@@ -9,6 +9,7 @@
 #include "Property.hpp"
 #include "Object.hpp"
 #include "Actor.hpp"
+#include "Alarm.hpp"
 #include <vector>
 
 #define component_cast(T, V)	dynamic_cast<T*>(V)
@@ -102,6 +103,8 @@ public:
 
 	std::vector<eCmpProperty>*	GetProperties();
 	eCmpProperty*				GetPropertyBase(eString name);
+
+	eAlarm*						mAlarm;
 
 protected:
 	eString						mNickName;

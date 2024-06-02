@@ -10,6 +10,7 @@ void eComponent::SuperInit()
 	mUseUpdate			= false;
 	mUseRender			= false;
 	mDestroyRequested	= false;
+	mAlarm				= new eAlarm();
 	Sleep();
 }
 
@@ -28,6 +29,12 @@ void eComponent::SuperUnload()
 		}
 	}
 	mProperties.clear();
+
+	if (mAlarm != nullptr)
+	{
+		delete mAlarm;
+		mAlarm = nullptr;
+	}
 }
 
 void eComponent::SetNickName(eString nickName)
