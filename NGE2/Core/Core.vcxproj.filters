@@ -30,6 +30,9 @@
     <ClInclude Include="System.hpp">
       <Filter>header</Filter>
     </ClInclude>
+    <ClInclude Include="EngineInfo.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EDR.cpp">

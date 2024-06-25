@@ -25,8 +25,14 @@ public:
 	void							Load(eString fileName);
 	void							LoadMem(eString& mem);
 
+	static void						InitIDB(std::vector<eTransformation3D>& transformations, eIDB& idb);
+
 	void							DrawContainer(uint id, eLayer* layer, eTransformation3D transformation, eMaterial* mat = nullptr);
 	void							Draw(eLayer* layer, eTransformation3D transformation, eMaterial* mat = nullptr);
+	const int						DrawInstances(eLayer* layer, std::vector<eTransformation3D>& transformations, eMaterial* mat = nullptr);
+	void							DrawInstances(eLayer* layer, eIDB& idb, eMaterial* mat = nullptr);
+	const int						DrawContainerInstances(uint id, eLayer* layer, std::vector<eTransformation3D>& transformations, eMaterial* mat = nullptr);
+	void							DrawContainerInstances(uint id, eLayer* layer, eIDB& idb, eMaterial* mat = nullptr);
 
 	void							SetDrawFnc(std::function<eShader*(eMeshContainer&, eLayer*, eTransformation3D, eMaterial*)> fnc);
 
@@ -44,5 +50,8 @@ protected:
 	eMeshContainer					CreateMesh(std::vector<eMeshVertex> vertices, std::vector<uint16> indices);
 	bool							DrawSingleBegin(eMeshContainer& container, eLayer* layer, eTransformation3D transformation, eMaterial* mat);
 	void							DrawSingleEnd(eShader* shader, eMeshContainer& container, eLayer* layer);
+
+	static const int				DrawInsBegin(std::vector<eTransformation3D>& transformations, bgfx::InstanceDataBuffer& idb);
+	void							DrawInsEnd(eMeshContainer& container, eTransformation3D& first, eLayer* layer, eMaterial* mat, bgfx::InstanceDataBuffer& idb);
 };
 #endif

@@ -1,0 +1,47 @@
+NGE2 v110	- 25.06.2024
+	* Added custom Tags for Actors
+	* Added KeyPressed() for Keyboard
+	* Added ButtonPressed() for Mouse and Gamepad
+	* Added GetGPUInfo() to eGraphics
+	* Added System Info Example
+	* Added NGE_ENGINE_INFO_VERSION for version check
+	* Added Scene Pause function
+	* Added Pause(), Resume() & IsPaused() to eScene
+	* Added SetUnpausable() & GetUnpausable() for Actors
+	* Added DrawInstances() & DrawContainerInstances() to eMesh
+	* Added InitIDB() to eMesh
+	* Added Instancing Example
+	* Added InstancingPreCalc Example
+	* Added Draw2DInstances() & Draw2DAtlasInstances() to eGraphics
+	* Added InitIDB() to eGraphics
+	* Added 2DInstancing Example
+	* Added PostProcessing Example
+	
+	* Changed old KeyPressed() to KeyDown()
+	* Changed old ButtonPressed() to ButtonDown()
+	
+	* Fixed Viewport3D orbit mode
+
+
+NGE2 v103	- 02.06.2024
+    * Added Alarm system for components
+    * Added Alarm example
+    * Added simple Pong Game example
+	* Added Scene Persistent Tag for Actors
+
+
+NGE2 v102	- 01.05.2024
+    * Added text rendering
+    * Added OBB collision
+
+
+NGE2 v101	- 28.04.2024
+    * Added Gamepad example
+    * Added Atlas rendering example
+    * Added fixed timestep code
+	
+	* Fixed gamepad deadzone bug
+
+
+NGE2 v100	- 25.04.2024
+	* Release version

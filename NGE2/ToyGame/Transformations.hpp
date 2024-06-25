@@ -22,8 +22,8 @@ struct eTransformation2D
 
 struct eTransformation3D
 {
-	vec3 mPosition;						//1 unit = 1 centimeter
-	vec3 mRotation;						//In degrees
-	vec3 mScale = vec3(1.0f);			//1 unit = 1 centimeter
+	vec3 mPosition;
+	vec3 mRotation;				//In degrees
+	vec3 mScale = vec3(1.0f);
 };
 #endif

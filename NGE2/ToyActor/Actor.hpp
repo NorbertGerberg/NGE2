@@ -40,6 +40,14 @@ public:
 	void										SetPersistent(bool vl = true);
 	bool										IsPersistent();
 
+	void										AddTag(eString tagname);
+	void										RemoveTag(eString tagname);
+	std::vector<eString>&						GetTags();
+	bool										HasTag(eString tagname);
+
+	void										SetUnpausable(const bool vl);
+	bool										GetUnpausable();
+
 private:
 	std::vector<std::unique_ptr<eComponent>>	mComponents;
 
@@ -47,5 +55,7 @@ private:
 	eQuality									mDetailLvl;
 	bool										mShouldDestroy;
 	bool										mPersistent;
+
+	std::vector<eString>						mTags;
 };
 #endif

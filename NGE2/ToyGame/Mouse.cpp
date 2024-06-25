@@ -72,16 +72,47 @@ void eMouse::SetScrollCallback(NGE_MOUSE_SCROLLCALLBACK callback)
 	glfwSetScrollCallback(GetGLFWwindow(), callback);
 }
 
-const bool eMouse::GetButtonPressed(const int key)
+const bool eMouse::GetButtonPressed(const int button)
 {
-	if (glfwGetMouseButton(GetGLFWwindow(), key) == GLFW_PRESS)
+	bool isDown = false;
+	int location = 0;
+	for (int i = 0; i < mButtonPressed.size(); i++)
+	{
+		if (mButtonPressed[i] == button)
+		{
+			location = i;
+			isDown = true;
+			break;
+		}
+	}
+
+	if (isDown)
+	{
+		if (GetButtonReleased(button))
+			mButtonPressed.erase(mButtonPressed.begin() + location);
+		return false;
+	}
+	else
+	{
+		if (GetButtonDown(button))
+		{
+			mButtonPressed.push_back(button);
+			return true;
+		}
+	}
+	return false;
+}
+
+const bool eMouse::GetButtonDown(const int button)
+{
+	if (glfwGetMouseButton(GetGLFWwindow(), button) == GLFW_PRESS)
 		return true;
 	return false;
 }
 
-const bool eMouse::GetButtonReleased(const int key)
+const bool eMouse::GetButtonReleased(const int button)
 {
-	if (glfwGetMouseButton(GetGLFWwindow(), key) == GLFW_RELEASE)
+	if (glfwGetMouseButton(GetGLFWwindow(), button) == GLFW_RELEASE)
 		return true;
 	return false;
 }

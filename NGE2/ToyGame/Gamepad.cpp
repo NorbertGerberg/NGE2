@@ -58,6 +58,37 @@ void eGamepad::Vibration(ulong port, int leftmotorspeed, int rightmotorspeed)
 
 bool eGamepad::GetButtonPressed(uint button)
 {
+	bool isDown = false;
+	int location = 0;
+	for (int i = 0; i < mButtonPressed.size(); i++)
+	{
+		if (mButtonPressed[i] == button)
+		{
+			location = i;
+			isDown = true;
+			break;
+		}
+	}
+
+	if (isDown)
+	{
+		if (GetButtonReleased(button))
+			mButtonPressed.erase(mButtonPressed.begin() + location);
+		return false;
+	}
+	else
+	{
+		if (GetButtonDown(button))
+		{
+			mButtonPressed.push_back(button);
+			return true;
+		}
+	}
+	return false;
+}
+
+bool eGamepad::GetButtonDown(uint button)
+{
 	return (mState.Gamepad.wButtons & button);
 }
 

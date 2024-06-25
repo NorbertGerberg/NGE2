@@ -5,6 +5,7 @@
 #define MOUSE_HPP
 #include <Types.hpp>
 #include "Input.hpp"
+#include <vector>
 
 #define NGE_MOUSE_POSCALLBACK	 GLFWcursorposfun
 #define NGE_MOUSE_ENTERCALLBACK	 GLFWcursorenterfun
@@ -57,11 +58,15 @@ public:
 	const int GetButtonState(const int button);
 	void SetStickyMode(const int vl);
 	void SetScrollCallback(NGE_MOUSE_SCROLLCALLBACK callback);
-	const bool GetButtonPressed(const int key);
-	const bool GetButtonReleased(const int key);
+	const bool GetButtonPressed(const int button);
+	const bool GetButtonDown(const int button);
+	const bool GetButtonReleased(const int button);
 	void CreateCursor(eMouseCursor* cursor, int type);
 	eMouseCursor* CreateImageCursor(eMouseCursor* cursor, eString filename, bool flipV = false, vec2i xyhot = vec2i(0));
 	void SetCursor(eMouseCursor* cursor);
 	eMouseCursor* DestroyCursor(eMouseCursor* cursor);
+
+private:
+	std::vector<int> mButtonPressed;
 };
 #endif

@@ -87,12 +87,19 @@ void eViewport3D::MouseRotate(real3 xpos, real3 ypos)
 	if (yaw <= mMinMaxYaw.x)
 		yaw = 0.0f;
 
-	vec3 direction;
-	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));	//Convert to radians first
-	direction.y = sin(glm::radians(pitch));
-	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	mFront = glm::normalize(direction);
-
+	if (mOrbitRot)
+	{
+		mat4 invView	= eMath::inverse(mView);
+		mFront			= eMath::normalize(vec3(invView[2]));
+	}
+	else
+	{
+		vec3 direction;
+		direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));	//Convert to radians first
+		direction.y = sin(glm::radians(pitch));
+		direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+		mFront = glm::normalize(direction);
+	}
 	mat4 rollMat = glm::rotate(mat4(1.0f), glm::radians(mDirection.mRoll), mFront);
 	mUp = mat3(rollMat) * mUp;
 }

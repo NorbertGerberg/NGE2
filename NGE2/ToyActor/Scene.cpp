@@ -16,6 +16,7 @@ eScene::~eScene()
 
 bool eScene::Initialize()
 {
+	mPaused = false;
 	std::vector<eString> toDelete;
 
 	int amount = mActors.size();
@@ -55,6 +56,7 @@ void eScene::Update()
 		auto& it = mActors[i];
 		if (it != nullptr)
 		{
+			if (mPaused && !it->HasTag("ENGINE#UNPAUSABLE")) continue;
 			it->Update();
 			if (it->ShouldDestroy())
 				toDelete.push_back(it->GetName());
@@ -152,6 +154,15 @@ void eScene::Load(eString fileName)
 				continue;
 			}
 			rtActor->SetDetailLvl(static_cast<eQuality>(detailLvl));
+
+			const strg grpTag = nickName + "_" + "tags";
+			const int tags_total = EDR::GetIntGI(SRC_FILE, "total", grpTag);
+			for (int f = 0; f < tags_total; f++)
+			{
+				strg tag = EDR::GetStringGI(SRC_FILE, "t" + std::to_string(f), grpTag);
+				std::replace_if(tag.begin(), tag.end(), [](char c) { return c == '|'; }, ' ');
+				rtActor->AddTag(tag);
+			}
 
 			int cmpAmount = EDR::GetIntGI(SRC_FILE, "cmps", nickName);
 			if (cmpAmount != -1)
@@ -364,6 +375,19 @@ void eScene::Save(eString fileName)
 				}
 			}
 			OUT_FILE += "</" + _nname + ">\n";
+
+
+			OUT_FILE += "<" + _nname + "_tags>\n";
+
+			auto& tgptr = it->GetTags();
+			OUT_FILE += "total=" + std::to_string(tgptr.size()) + "\n";
+			for (uint f = 0; f < tgptr.size(); f++)
+			{
+				eString vl = tgptr[f];
+				vl.Replace(' ', '|');
+				OUT_FILE += "t" + std::to_string(f) + "=" + vl.GetStrg() + "\n";
+			}
+			OUT_FILE += "</" + _nname + "_tags>\n";
 		}
 	}
 
@@ -510,6 +534,14 @@ void eScene::SpawnActor(eString fileName, eString name)
 	strg aclass = EDR::GetStringGI(SRC_FILE, "class", "info");
 	std::replace_if(aclass.begin(), aclass.end(), [](char c) { return c == '|'; }, ' ');
 	rtActor->SetClass(aclass);
+
+	const int tags_total = EDR::GetIntGI(SRC_FILE, "total", "tags");
+	for (int i = 0; i < tags_total; i++)
+	{
+		strg tag = EDR::GetStringGI(SRC_FILE, "t" + std::to_string(i), "tags");
+		std::replace_if(tag.begin(), tag.end(), [](char c) { return c == '|'; }, ' ');
+		rtActor->AddTag(tag);
+	}
 
 	int cmpAmount = EDR::GetIntGI(SRC_FILE, "cmps", "info");
 	if (cmpAmount != -1)
@@ -734,4 +766,19 @@ void eScene::ApplySwitch()
 		}
 		mSwitchSceneTo.Clear();
 	}
+}
+
+void eScene::Pause()
+{
+	mPaused = true;
+}
+
+void eScene::Resume()
+{
+	mPaused = false;
+}
+
+bool eScene::IsPaused()
+{
+	return mPaused;
 }

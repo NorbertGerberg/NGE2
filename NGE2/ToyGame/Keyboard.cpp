@@ -5,6 +5,37 @@
 
 const bool eKeyboard::GetKeyPressed(const int key)
 {
+	bool isDown		= false;
+	int location	= 0;
+	for (int i = 0; i < mKeyPressed.size(); i++)
+	{
+		if (mKeyPressed[i] == key)
+		{
+			location = i;
+			isDown = true;
+			break;
+		}
+	}
+
+	if (isDown)
+	{
+		if (GetKeyReleased(key))
+			mKeyPressed.erase(mKeyPressed.begin() + location);
+		return false;
+	}
+	else
+	{
+		if (GetKeyDown(key))
+		{
+			mKeyPressed.push_back(key);
+			return true;
+		}
+	}
+	return false;
+}
+
+const bool eKeyboard::GetKeyDown(const int key)
+{
 	if (glfwGetKey(GetGLFWwindow(), key) == GLFW_PRESS)
 		return true;
 	return false;

@@ -28,6 +28,8 @@
 
 #define NGE_INVALID_HANDLE BGFX_INVALID_HANDLE
 
+typedef bgfx::Caps eGPU_INFO;
+
 struct eQuadVertex
 {
 	real3 x;
@@ -40,6 +42,12 @@ struct bShaderMsgBack
 {
 	strg mMsg;
 	strg mMsg2;
+};
+
+struct eIDB
+{
+	bgfx::InstanceDataBuffer	mBuffer;
+	int							mCouldNotDraw;
 };
 
 class eGraphics
@@ -69,14 +77,22 @@ public:
 		}
 	}
 
+	void InitIDB(eLayer* layer, std::vector<eTransformation2D>& transformations, eIDB& idb);
+
 	void Draw2D(eShader* shader, eLayer* layer, eViewport2D vp, eTransformation2D transformation, eTexture* texture);
+	const int Draw2DInstances(eShader* shader, eLayer* layer, eViewport2D vp, std::vector<eTransformation2D>& transformations, eTexture* texture);
+	void Draw2DInstances(eShader* shader, eLayer* layer, eViewport2D vp, eIDB& idb, eTexture* texture);
 	void Draw2DAtlas(eShader* shader, eLayer* layer, eViewport2D vp, eTransformation2D transformation, eTextureAtlas& atlas, vec2 subImg);
+	const int Draw2DAtlasInstances(eShader* shader, eLayer* layer, eViewport2D vp, std::vector<eTransformation2D>& transformations, eTextureAtlas& atlas, vec2 subImg);
+	void Draw2DAtlasInstances(eShader* shader, eLayer* layer, eViewport2D vp, eIDB& idb, eTextureAtlas& atlas, vec2 subImg);
 	void ResetAtlasShader(eShader* shader);
 	void Draw3D(eShader* shader, eLayer* layer, eTransformation3D transformation, eTexture* texture);
 	void DrawBillboard(eShader* shader, eLayer* layer, eTransformation3D transformation, eTexture* texture);
 	void DrawText(eShader* shader, eLayer* layer, eViewport2D vp, eTransformation2D transformation, eTextAtlas& atlas, eString text);
 
 	bool CompileShader(eString name);
+
+	const eGPU_INFO* GetGPUInfo();
 
 private:
 	bgfx::Init	mInit;
@@ -96,5 +112,7 @@ private:
 	bool CompileShaderFA(eString name);
 	bShaderMsgBack CompileShaderSingle(eString name, bool vk = false);
 	strg CompileShaderTask(strg arguments);
+
+	const int DrawInsBegin(eLayer* layer, std::vector<eTransformation2D>& transformations, bgfx::InstanceDataBuffer& idb);
 };
 #endif

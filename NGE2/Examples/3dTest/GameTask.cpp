@@ -8,6 +8,7 @@
 #include <Mesh.hpp>
 #include <Mouse.hpp>
 #include "GameTask.hpp"
+#include <Keyboard.hpp>
 
 //----------------------------------------------------3D Test 
 //	Custom Material Properties
@@ -131,11 +132,12 @@ void GameTask::Update()
 		//----------------------------------------------------3D Test
 		mMat->Update(mTime->DeltaTime());
 
-		mWnd->GetMouse()->SetInputMode(NGE_INPUT_CURSOR, mWnd->GetMouse()->GetButtonPressed(NGE_INPUT_MOUSE_BUTTON_RIGHT) ? NGE_INPUT_CURSOR_DISABLED : NGE_INPUT_CURSOR_NORMAL);
-		mWnd->GetMouse()->SetPositionCallback(mWnd->GetMouse()->GetButtonPressed(NGE_INPUT_MOUSE_BUTTON_RIGHT) ? mouse_callback : nullptr);
+		mWnd->GetMouse()->SetInputMode(NGE_INPUT_CURSOR, mWnd->GetMouse()->GetButtonDown(NGE_INPUT_MOUSE_BUTTON_RIGHT) ? NGE_INPUT_CURSOR_DISABLED : NGE_INPUT_CURSOR_NORMAL);
+		mWnd->GetMouse()->SetPositionCallback(mWnd->GetMouse()->GetButtonDown(NGE_INPUT_MOUSE_BUTTON_RIGHT) ? mouse_callback : nullptr);
 
-		if (mWnd->GetMouse()->GetButtonPressed(NGE_INPUT_MOUSE_BUTTON_RIGHT))
+		if (mWnd->GetMouse()->GetButtonDown(NGE_INPUT_MOUSE_BUTTON_RIGHT))
 			mViewport->SetFirstMouse();
+
 		//----------------------------------------------------End
 		PostUpdateFixedTime();
 	}

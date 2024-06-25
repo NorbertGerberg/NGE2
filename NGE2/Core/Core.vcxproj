@@ -154,6 +154,7 @@
     <ClInclude Include="Console.hpp" />
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="EDR.hpp" />
+    <ClInclude Include="EngineInfo.hpp" />
     <ClInclude Include="Quality.hpp" />
     <ClInclude Include="String.hpp" />
     <ClInclude Include="System.hpp" />

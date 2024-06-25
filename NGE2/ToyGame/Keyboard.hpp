@@ -5,6 +5,7 @@
 #define KEYBOARD_HPP
 #include <Types.hpp>
 #include "Input.hpp"
+#include <vector>
 
 #define NGE_KEYBOARD_CHARCALLBACK GLFWcharfun
 
@@ -142,6 +143,7 @@ class eKeyboard : public eInput
 public:
 	//Physical input
 	const bool GetKeyPressed(const int key);
+	const bool GetKeyDown(const int key);
 	const bool GetKeyReleased(const int key);
 	const int GetScancode(const int key);
 	const int GetKeyState(const int key);
@@ -151,5 +153,8 @@ public:
 	//Text input
 	void SetCharCallback(NGE_KEYBOARD_CHARCALLBACK& callback);
 	const char* GetKeyName(const int key, const int scancode);
+
+private:
+	std::vector<int> mKeyPressed;
 };
 #endif

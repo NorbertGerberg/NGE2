@@ -125,6 +125,11 @@ void eGraphics::Touch(int& width, int& height, bool vsync, uint8 msaaSetting)
 #endif
 }
 
+void eGraphics::InitIDB(eLayer* layer, std::vector<eTransformation2D>& transformations, eIDB& idb)
+{
+	idb.mCouldNotDraw = DrawInsBegin(layer, transformations, idb.mBuffer);
+}
+
 void eGraphics::Draw2D(eShader* shader, eLayer* layer, eViewport2D vp, eTransformation2D transformation, eTexture* texture)
 {
 	if (texture == nullptr || shader == nullptr || layer == nullptr)
@@ -152,6 +157,77 @@ void eGraphics::Draw2D(eShader* shader, eLayer* layer, eViewport2D vp, eTransfor
 	shader->Submit(layer->GetProperties().mViewId, true);
 }
 
+const int eGraphics::Draw2DInstances(eShader* shader, eLayer* layer, eViewport2D vp, std::vector<eTransformation2D>& transformations, eTexture* texture)
+{
+	if (texture == nullptr || shader == nullptr || layer == nullptr)
+		return -1;
+
+	real3 proj[16];
+	bx::mtxOrtho(proj, vp.GetTranslation().x, vp.GetSize().x + vp.GetTranslation().x,
+		vp.GetSize().y + vp.GetTranslation().y, vp.GetTranslation().y, 0.1f, 100.0f, 0.0f, false);
+	bgfx::setViewTransform(layer->GetProperties().mViewId, mView2D, proj);
+
+	bgfx::InstanceDataBuffer idb;
+	const int rtVl = DrawInsBegin(layer, transformations, idb);
+	
+	SetState(BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_A | BGFX_STATE_BLEND_ALPHA);
+	shader->ApplyVertexBuffer(0, mVbh2D);
+	bgfx::setInstanceDataBuffer(&idb);
+	shader->SetTexture(0, "s_texColor", texture);
+	shader->Submit(layer->GetProperties().mViewId, true);
+
+	return rtVl;
+}
+
+void eGraphics::Draw2DInstances(eShader* shader, eLayer* layer, eViewport2D vp, eIDB& idb, eTexture* texture)
+{
+	if (texture == nullptr || shader == nullptr || layer == nullptr)
+		return;
+
+	real3 proj[16];
+	bx::mtxOrtho(proj, vp.GetTranslation().x, vp.GetSize().x + vp.GetTranslation().x,
+		vp.GetSize().y + vp.GetTranslation().y, vp.GetTranslation().y, 0.1f, 100.0f, 0.0f, false);
+	bgfx::setViewTransform(layer->GetProperties().mViewId, mView2D, proj);
+
+	SetState(BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_A | BGFX_STATE_BLEND_ALPHA);
+	shader->ApplyVertexBuffer(0, mVbh2D);
+	bgfx::setInstanceDataBuffer(&idb.mBuffer);
+	shader->SetTexture(0, "s_texColor", texture);
+	shader->Submit(layer->GetProperties().mViewId, true);
+}
+
+const int eGraphics::DrawInsBegin(eLayer* layer, std::vector<eTransformation2D>& transformations, bgfx::InstanceDataBuffer& idb)
+{
+	const int insCnt = transformations.size();
+	const uint16 insStride = 64;
+	uint32 drawnIns = bgfx::getAvailInstanceDataBuffer(insCnt, insStride);
+
+	const int couldNotDraw = insCnt - drawnIns;
+
+	bgfx::allocInstanceDataBuffer(&idb, drawnIns, insStride);
+
+	uint8* data = idb.data;
+
+	for (uint32 i = 0; i < drawnIns; i++)
+	{
+		auto& transformation = transformations[i];
+		real3 posX = (layer->GetProperties().mResolution.x / transformation.mScale.x) / (layer->GetProperties().mResolution.x / transformation.mPosition.x);
+		real3 posY = (layer->GetProperties().mResolution.y / transformation.mScale.y) / (layer->GetProperties().mResolution.y / transformation.mPosition.y);
+
+		vec3 rotPiv = vec3(transformation.mRotationPivot.x, transformation.mRotationPivot.y, 0.0f);
+		mat4 mdl = eMath::scale(mat4(1.0f), vec3(transformation.mScale.x, transformation.mScale.y, 1.0f));
+		mdl = eMath::translate(mdl, vec3(posX, posY, 0.0f) + rotPiv);
+		mdl = eMath::rotate(mdl, glm::radians(transformation.mRotation), vec3(0.0f, 0.0f, 1.0f));
+		mdl = eMath::translate(mdl, -rotPiv);
+
+		const float* _mtx = eMath::value_ptr(mdl);
+		memcpy(data, _mtx, insStride);
+		data += insStride;
+	}
+
+	return couldNotDraw;
+}
+
 void eGraphics::Draw2DAtlas(eShader* shader, eLayer* layer, eViewport2D vp, eTransformation2D transformation, eTextureAtlas& atlas, vec2 subImg)
 {
 	vec4 atinf[2];
@@ -160,6 +236,26 @@ void eGraphics::Draw2DAtlas(eShader* shader, eLayer* layer, eViewport2D vp, eTra
 	shader->SetUniform("atlasInfo", atinf, 2);
 
 	Draw2D(shader, layer, vp, transformation, atlas.mTexture);
+}
+
+const int eGraphics::Draw2DAtlasInstances(eShader* shader, eLayer* layer, eViewport2D vp, std::vector<eTransformation2D>& transformations, eTextureAtlas& atlas, vec2 subImg)
+{
+	vec4 atinf[2];
+	atinf[0] = vec4(subImg, atlas.mSize);
+	atinf[1] = vec4(atlas.mSubSize, 1.0f, 0.0f);
+	shader->SetUniform("atlasInfo", atinf, 2);
+
+	return Draw2DInstances(shader, layer, vp, transformations, atlas.mTexture);
+}
+
+void eGraphics::Draw2DAtlasInstances(eShader* shader, eLayer* layer, eViewport2D vp, eIDB& idb, eTextureAtlas& atlas, vec2 subImg)
+{
+	vec4 atinf[2];
+	atinf[0] = vec4(subImg, atlas.mSize);
+	atinf[1] = vec4(atlas.mSubSize, 1.0f, 0.0f);
+	shader->SetUniform("atlasInfo", atinf, 2);
+
+	Draw2DInstances(shader, layer, vp, idb, atlas.mTexture);
 }
 
 void eGraphics::ResetAtlasShader(eShader* shader)
@@ -648,4 +744,9 @@ strg eGraphics::CompileShaderTask(strg arguments)
 	}
 
 	return output.str();
+}
+
+const eGPU_INFO* eGraphics::GetGPUInfo()
+{
+	return bgfx::getCaps();
 }

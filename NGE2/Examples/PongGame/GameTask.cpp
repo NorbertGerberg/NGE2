@@ -78,9 +78,9 @@ void GameTask::Update()
 		//	PLAYER
 		vec2 playerPos = mPlayerCol.mPos;
 
-		if (mWnd->GetKeyboard()->GetKeyPressed(NGE_INPUT_KEY_UP))
+		if (mWnd->GetKeyboard()->GetKeyDown(NGE_INPUT_KEY_UP))
 			playerPos.y -= 10.0f;
-		else if (mWnd->GetKeyboard()->GetKeyPressed(NGE_INPUT_KEY_DOWN))
+		else if (mWnd->GetKeyboard()->GetKeyDown(NGE_INPUT_KEY_DOWN))
 			playerPos.y += 10.0f;
 
 		if (playerPos.y >= 356.0f)

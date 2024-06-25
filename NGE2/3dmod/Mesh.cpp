@@ -185,6 +185,11 @@ eMeshContainer eMesh::CreateMesh(std::vector<eMeshVertex> vertices, std::vector<
 	return rtVl;
 }
 
+void eMesh::InitIDB(std::vector<eTransformation3D>& transformations, eIDB& idb)
+{
+	idb.mCouldNotDraw = DrawInsBegin(transformations, idb.mBuffer);
+}
+
 void eMesh::DrawContainer(uint id, eLayer* layer, eTransformation3D transformation, eMaterial* mat)
 {
 	eMeshContainer& container = mSubMeshes[id];
@@ -203,6 +208,158 @@ void eMesh::Draw(eLayer* layer, eTransformation3D transformation, eMaterial* mat
 		eShader* shader = mDrawFnc(it, layer, transformation, mat);
 		DrawSingleEnd(shader, it, layer);
 	}
+}
+
+const int eMesh::DrawInstances(eLayer* layer, std::vector<eTransformation3D>& transformations, eMaterial* mat)
+{
+	eViewport3D* viewport = layer->GetViewport();
+	if (viewport == nullptr) return -1;
+
+	bgfx::InstanceDataBuffer idb;
+	const int rtVl = DrawInsBegin(transformations, idb);
+
+	for (auto& it : mSubMeshes)
+	{
+		eMaterial* useMat = it.mMat;
+
+		bool noMat = true;
+		if (mat != nullptr)
+		{
+			noMat = false;
+			useMat = mat;
+		}
+		else if (it.mMat != nullptr)
+			noMat = false;
+
+		if(!noMat)
+			DrawInsEnd(it, transformations[0], layer, useMat, idb);
+	}
+
+	return rtVl;
+}
+
+void eMesh::DrawInstances(eLayer* layer, eIDB& idb, eMaterial* mat)
+{
+	eViewport3D* viewport = layer->GetViewport();
+	if (viewport == nullptr) return;
+
+	eTransformation3D empt = {};
+
+	for (auto& it : mSubMeshes)
+	{
+		eMaterial* useMat = it.mMat;
+
+		bool noMat = true;
+		if (mat != nullptr)
+		{
+			noMat = false;
+			useMat = mat;
+		}
+		else if (it.mMat != nullptr)
+			noMat = false;
+
+		if (!noMat)
+			DrawInsEnd(it, empt, layer, useMat, idb.mBuffer);
+	}
+}
+
+const int eMesh::DrawContainerInstances(uint id, eLayer* layer, std::vector<eTransformation3D>& transformations, eMaterial* mat)
+{
+	eViewport3D* viewport = layer->GetViewport();
+	if (viewport == nullptr) return -1;
+
+	bgfx::InstanceDataBuffer idb;
+	const int rtVl = DrawInsBegin(transformations, idb);
+
+	eMeshContainer& cont = mSubMeshes[id];
+
+	eMaterial* useMat = cont.mMat;
+
+	bool noMat = true;
+	if (mat != nullptr)
+	{
+		noMat = false;
+		useMat = mat;
+	}
+	else if (cont.mMat != nullptr)
+		noMat = false;
+
+	if (!noMat)
+		DrawInsEnd(cont, transformations[0], layer, useMat, idb);
+
+	return rtVl;
+}
+
+void eMesh::DrawContainerInstances(uint id, eLayer* layer, eIDB& idb, eMaterial* mat)
+{
+	eViewport3D* viewport = layer->GetViewport();
+	if (viewport == nullptr) return;
+
+	eMeshContainer& cont = mSubMeshes[id];
+
+	eMaterial* useMat = cont.mMat;
+
+	eTransformation3D empt = {};
+
+	bool noMat = true;
+	if (mat != nullptr)
+	{
+		noMat = false;
+		useMat = mat;
+	}
+	else if (cont.mMat != nullptr)
+		noMat = false;
+
+	if (!noMat)
+		DrawInsEnd(cont, empt, layer, useMat, idb.mBuffer);
+}
+
+const int eMesh::DrawInsBegin(std::vector<eTransformation3D>& transformations, bgfx::InstanceDataBuffer& idb)
+{
+	const int insCnt = transformations.size();
+	const uint16 insStride = 64;
+	uint32 drawnIns = bgfx::getAvailInstanceDataBuffer(insCnt, insStride);
+
+	const int couldNotDraw = insCnt - drawnIns;
+
+	bgfx::allocInstanceDataBuffer(&idb, drawnIns, insStride);
+
+	uint8* data = idb.data;
+
+	for (uint32 i = 0; i < drawnIns; i++)
+	{
+		const mat4 mtx = eTools::Transform(transformations[i]);
+		const float* _mtx = eMath::value_ptr(mtx);
+		memcpy(data, _mtx, insStride);
+		data += insStride;
+	}
+
+	return couldNotDraw;
+}
+
+void eMesh::DrawInsEnd(eMeshContainer& container, eTransformation3D& first, eLayer* layer, eMaterial* mat, bgfx::InstanceDataBuffer& idb)
+{
+	eShader* shader = mDrawFnc(container, layer, first, mat);
+
+	shader->ApplyVertexBuffer(0, container.mVbh);
+	shader->ApplyIndexBuffer(container.mIbh);
+
+	bgfx::setInstanceDataBuffer(&idb);
+
+	eMaterialPrp* matPrp = mat->GetProperties();
+	if (matPrp->mTwoSides)
+	{
+		eGraphics::SetState(BGFX_STATE_BLEND_ALPHA
+			| BGFX_STATE_WRITE_RGB
+			| BGFX_STATE_WRITE_A
+			| BGFX_STATE_WRITE_Z
+			| BGFX_STATE_DEPTH_TEST_LESS
+			| BGFX_STATE_MSAA);
+	}
+	else
+		eGraphics::SetState();
+
+	shader->Submit(layer->GetProperties().mViewId, false);
 }
 
 void eMesh::SetDrawFnc(std::function<eShader*(eMeshContainer&, eLayer*, eTransformation3D, eMaterial*)> fnc)

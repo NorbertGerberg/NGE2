@@ -7,6 +7,7 @@
 #include <String.hpp>
 #include <Windows.h>
 #include <Xinput.h>
+#include <vector>
 
 struct eGamepadLayout
 {
@@ -41,6 +42,7 @@ public:
 	eDeadzoneStick DeadzoneCorrection();
 	void Vibration(ulong port, int leftmotorspeed, int rightmotorspeed);
 	bool GetButtonPressed(uint button);
+	bool GetButtonDown(uint button);
 	bool GetButtonReleased(uint button);
 	sshort GetButtons();
 	short GetThumbLX();
@@ -50,7 +52,8 @@ public:
 	eGamepadLayout LoadLayout(eString layout);
 
 private:
-	XINPUT_STATE mState;
-	XINPUT_VIBRATION mVibration;
+	XINPUT_STATE		mState;
+	XINPUT_VIBRATION	mVibration;
+	std::vector<uint>	mButtonPressed;
 };
 #endif

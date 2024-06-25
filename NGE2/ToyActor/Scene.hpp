@@ -34,11 +34,16 @@ public:
 	void					SetGlobalQuality(eQuality quality);
 	eQuality				GetGlobalQuality();
 
+	void					Pause();
+	void					Resume();
+	bool					IsPaused();
+
 private:
 	std::vector<eActor*>	mActors;
 	bool					mShouldSwitchScene = false;
 	eString					mSwitchSceneTo;
 	eString					mName;
 	eQuality				mGlobalQuality;
+	bool					mPaused;
 };
 #endif

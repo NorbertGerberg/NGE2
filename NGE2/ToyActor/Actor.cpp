@@ -163,6 +163,16 @@ void eActor::SavePrefab(eString name)
 	}
 	SRC += "</info>\n";
 
+	SRC += "<tags>\n";
+	SRC += "total=" + std::to_string(mTags.size()) + "\n";
+	for (uint i = 0; i < mTags.size(); i++)
+	{
+		eString vl = mTags[i];
+		vl.Replace(' ', '|');
+		SRC += "t" + std::to_string(i) + "=" + vl.GetStrg() + "\n";
+	}
+	SRC += "</tags>\n";
+
 	for (auto& it : mComponents)
 	{
 		strg cmpName = it->GetNickName().GetStrg();
@@ -309,4 +319,59 @@ void eActor::SetPersistent(bool vl)
 bool eActor::IsPersistent()
 {
 	return mPersistent;
+}
+
+void eActor::AddTag(eString tagname)
+{
+	for (auto& it : mTags)
+	{
+		if (it == tagname)
+		{
+			eConsole::PrintLog("WARNING::eActor::AddTag", "Tag '" + tagname.GetStrg() + "' already asigned to " + mName.GetStrg() + "'!");
+			return;
+		}
+	}
+	mTags.push_back(tagname);
+}
+
+void eActor::RemoveTag(eString tagname)
+{
+	for (uint i = 0; i < mTags.size(); i++)
+	{
+		auto& it = mTags[i];
+		if (it == tagname)
+		{
+			mTags.erase(mTags.begin() + i);
+			return;
+		}
+	}
+	eConsole::PrintLog("WARNING::eActor::RemoveTag", "Tag '" + tagname.GetStrg() + "' not asigned to " + mName.GetStrg() + "'!");
+}
+
+std::vector<eString>& eActor::GetTags()
+{
+	return mTags;
+}
+
+bool eActor::HasTag(eString tagname)
+{
+	for (auto& it : mTags)
+	{
+		if (it == tagname)
+			return true;
+	}
+	return false;
+}
+
+void eActor::SetUnpausable(const bool vl)
+{
+	if (vl)
+		AddTag("ENGINE#UNPAUSABLE");
+	else
+		RemoveTag("ENGINE#UNPAUSABLE");
+}
+
+bool eActor::GetUnpausable()
+{
+	return HasTag("ENGINE#UNPAUSABLE");
 }
