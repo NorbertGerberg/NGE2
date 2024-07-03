@@ -4,10 +4,13 @@
 #include "GameRenderer.hpp"
 #include <Window.hpp>
 
-GameRenderer::GameRenderer(eWindow* window, uint32 width, uint32 height, bool vsync, uint8 msaa, eRenderAPI api)
+GameRenderer::GameRenderer(eWindow* window, uint32 width, uint32 height, bool vsync, uint8 msaa, eRenderAPI api, eWindow* window2)
 	: eRenderer(window->GetWnd(), width, height, vsync, msaa, api)
 {
 	mWnd = window;
+	//----------------------------------------------------Multi Window Rendering
+	mWnd2 = window2;
+	//----------------------------------------------------End
 
 	//	Init Shaders
 	PushShader("Sprite2D");
@@ -40,19 +43,47 @@ GameRenderer::GameRenderer(eWindow* window, uint32 width, uint32 height, bool vs
 	prp.mDepthOnly = false;
 	m2DPass->Initialize();
 
-	mGfx->InitDI(mWnd->GetGLFWwindow(), NULL);
+	//----------------------------------------------------Multi Window Rendering
+	PushLayer("2D2");
+	m2DPass2 = GetLayer("2D2");
+	eLayerProperties& prp2 = m2DPass2->GetProperties();
+	prp2.mViewId = 1;
+	prp2.mName = "2DPass2";
+	prp2.mTopMost = true;
+	prp2.mIs2D = true;
+	prp2.mClearColor = 0;
+	prp2.mPosition = vec2i(0);
+	prp2.mResolution = window2->GetSize();
+	prp2.mAspectRatio = window2->GetSize();
+	prp2.mUpdateSize = true;
+	prp2.mTransparent = false;
+	prp2.mDepthOnly = false;
+	prp2.mWnd		= window2;
+	m2DPass2->Initialize();
+
+	mGfx->InitDI(mWnd->GetGLFWwindow(), NULL, 2);
+	//----------------------------------------------------End
 }
 
 GameRenderer::~GameRenderer()
 {
 	mGfx->ReleaseDI();
 	m2DPass = nullptr;
+	//----------------------------------------------------Multi Window Rendering
+	m2DPass2 = nullptr;
+	//----------------------------------------------------End
 }
 
 void GameRenderer::PreUpdate(bool vsync, uint8 msaa)
 {
 	vec2i size = UpdateSize(mWnd, vsync, msaa);
 	m2DPass->Update(size);
+
+	//----------------------------------------------------Multi Window Rendering
+	mWnd2->SizeChanged();
+	m2DPass2->Update(mWnd2->GetWindowSize());
+	//----------------------------------------------------End
+
 	mGfx->BeginDI();
 }
 

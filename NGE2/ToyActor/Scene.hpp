@@ -38,6 +38,9 @@ public:
 	void					Resume();
 	bool					IsPaused();
 
+	void					SetCreatorName(eString name);
+	eString					GetCreatorName();
+
 private:
 	std::vector<eActor*>	mActors;
 	bool					mShouldSwitchScene = false;
@@ -45,5 +48,6 @@ private:
 	eString					mName;
 	eQuality				mGlobalQuality;
 	bool					mPaused;
+	eString					mCreatorName;
 };
 #endif

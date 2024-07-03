@@ -130,6 +130,10 @@ void eScene::Load(eString fileName)
 	strg SRC_FILE = EDR::ReadBinary(filePath.c_str());
 	EDR::ConvertToText(SRC_FILE);
 
+	strg crnm = EDR::GetStringGI(SRC_FILE, "creator", "info");
+	std::replace_if(crnm.begin(), crnm.end(), [](char c) { return c == '|'; }, ' ');
+	mCreatorName.Set(crnm);
+
 	int aAmount = EDR::GetIntGI(SRC_FILE, "aa", "info");
 	if (aAmount != -1)
 	{
@@ -343,7 +347,11 @@ void eScene::Save(eString fileName)
 			OUT_FILE += "a" + std::to_string(i) + "=" + _nname + "\n";
 		}
 	}
-	OUT_FILE += "</info>\n";
+
+	strg crnm = mCreatorName.GetStrg();
+	std::replace_if(crnm.begin(), crnm.end(), [](char c) { return c == ' '; }, '|');
+	OUT_FILE += "creator=" + crnm;
+	OUT_FILE += "\n</info>\n";
 
 	if (aa != -1)
 	{
@@ -781,4 +789,14 @@ void eScene::Resume()
 bool eScene::IsPaused()
 {
 	return mPaused;
+}
+
+void eScene::SetCreatorName(eString name)
+{
+	mCreatorName = name;
+}
+
+eString eScene::GetCreatorName()
+{
+	return mCreatorName;
 }

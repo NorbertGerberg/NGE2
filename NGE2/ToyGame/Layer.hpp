@@ -11,6 +11,8 @@
 
 typedef bgfx::FrameBufferHandle  eFramebufferHandle;
 
+class eWindow;
+
 struct eLayerProperties
 {
 	bgfx::ViewId		mViewId;
@@ -24,6 +26,7 @@ struct eLayerProperties
 	eString				mName;
 	bool				mIs2D;
 	bool				mDepthOnly;
+	eWindow*			mWnd = nullptr;
 };
 
 struct eFramebuffer
@@ -41,7 +44,7 @@ public:
 	~eLayer();
 	bool Initialize();
 	void Unload();
-	void Update(int width, int height);
+	void Update(vec2 size);
 
 	void SetViewport(eViewport3D* viewport);
 	eViewport3D* GetViewport();
@@ -52,7 +55,7 @@ public:
 	static bool mRefreshSize;
 
 private:
-	eViewport3D* mViewport;
+	eViewport3D*		mViewport;
 	eLayerProperties	mProperties;
 	eFramebuffer		mFramebuffer;
 

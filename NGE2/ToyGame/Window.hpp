@@ -71,6 +71,8 @@ public:
 	eMouse* GetMouse();
 	eKeyboard* GetKeyboard();
 
+	bool SizeChanged();
+
 private:
 	GLFWwindow* mWnd;
 

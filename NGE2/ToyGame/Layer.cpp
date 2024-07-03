@@ -4,6 +4,7 @@
 #include "Layer.hpp"
 #include <bx/bx.h>
 #include <bx/math.h>
+#include "Window.hpp"
 
 bool eLayer::mRefreshSize = true;
 
@@ -42,13 +43,13 @@ void eLayer::Unload()
 	DestroyFB();
 }
 
-void eLayer::Update(int width, int height)
+void eLayer::Update(vec2 size)
 {
 	if (mRefreshSize)
 	{
 		if (mProperties.mUpdateSize)
 		{
-			mProperties.mResolution = vec2(width, height);
+			mProperties.mResolution = size;
 			mProperties.mAspectRatio = mProperties.mResolution;
 		}
 
@@ -111,7 +112,9 @@ void eLayer::UpdateFB(vec2i texSize, eTextureFormat format)
 {
 	if (!bgfx::isValid(mFramebuffer.mFbh) && mUseFramebuffer)
 	{
-		if (mProperties.mDepthOnly)
+		if (mProperties.mWnd != nullptr)
+			mFramebuffer.mFbh = bgfx::createFrameBuffer(mProperties.mWnd->GetWnd(), (uint16)texSize.x, (uint16)texSize.y, format, bgfx::TextureFormat::D32F);
+		else if (mProperties.mDepthOnly)
 		{
 			bgfx::TextureHandle fbtextures[] =
 			{

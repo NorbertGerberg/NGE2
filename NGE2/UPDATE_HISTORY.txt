@@ -1,3 +1,15 @@
+NGE2 v111	- 03.07.2024
+	* Added small comfort macros for components
+	* Added multiple window rendering
+	* Added MultiWindowRendering example
+	* Added SizeChanged() to eWindow
+	* Added Scene Creator Name to eScene
+	* Added SetCreatorName() to eScene
+	* Added GetCreatorName() to eScene
+	
+	* Changed eLayer::Update(int width, int height) to eLayer::Update(vec2 size)
+
+
 NGE2 v110	- 25.06.2024
 	* Added custom Tags for Actors
 	* Added KeyPressed() for Keyboard

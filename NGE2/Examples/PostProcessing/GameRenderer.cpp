@@ -72,9 +72,9 @@ void GameRenderer::PreUpdate(bool vsync, uint8 msaa)
 {
 	vec2i size = UpdateSize(mWnd, vsync, msaa);
 
-	m3DPass->Update(size.x, size.y);
+	m3DPass->Update(size);
 	//----------------------------------------------------PostProcessing Test
-	mBasePass->Update(size.x, size.y);
+	mBasePass->Update(size);
 	//----------------------------------------------------End
 }
 

@@ -14,6 +14,14 @@
 
 #define component_cast(T, V)	dynamic_cast<T*>(V)
 
+#define expands : public
+#define defaultproperties(I) I::I()
+#define defaultinit(I) I(); \
+						bool Initialize(); \
+						void Update();     \
+						void Render();     \
+						void Unload();     \
+
 struct eCmpProperty
 {
 	eProperty	mProperty;

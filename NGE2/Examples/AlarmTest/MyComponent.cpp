@@ -4,7 +4,7 @@
 #include "MyComponent.hpp"
 #include <Graphics.hpp>
 
-MyComponent::MyComponent()
+defaultproperties(MyComponent)
 {
 	InitProperty("Message", eString("Hello, ToyGame!"), ePropertyType::tString);
 }

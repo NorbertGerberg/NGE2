@@ -3,5 +3,5 @@
 =========================================*/
 #ifndef ENGINEINFO_HPP
 #define ENGINEINFO_HPP
-#define NGE_ENGINE_INFO_VERSION 110
+#define NGE_ENGINE_INFO_VERSION 111
 #endif

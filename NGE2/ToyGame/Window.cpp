@@ -9,6 +9,8 @@
 #include "Keyboard.hpp"
 #include <stb_image.h>
 
+#include "Layer.hpp"
+
 bool eWindow::INIT()
 {
 	if (!glfwInit())
@@ -322,4 +324,16 @@ void eWindow::SwitchFullscreenEx()
 	SetWindowDecorated(false);
 	SetWindowPosition(vec2i(0));
 	AutoSize();
+}
+
+bool eWindow::SizeChanged()
+{
+	const vec2i asize = GetWindowSize();
+	if (asize != mSize)
+	{
+		eLayer::mRefreshSize = true;
+		mSize = asize;
+		return true;
+	}
+	return false;
 }

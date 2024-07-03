@@ -53,6 +53,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InstancingPreCalc", "Exampl
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PostProcessing", "Examples\PostProcessing\PostProcessing.vcxproj", "{E88B9063-535D-4C94-BA85-2E93BDC443F8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultiWindowRendering", "Examples\MultiWindowRendering\MultiWindowRendering.vcxproj", "{4BDE7CD3-560C-4D31-8F80-63B4AA94665A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -151,6 +153,10 @@ Global
 		{E88B9063-535D-4C94-BA85-2E93BDC443F8}.Debug|x64.Build.0 = Debug|x64
 		{E88B9063-535D-4C94-BA85-2E93BDC443F8}.Release|x64.ActiveCfg = Release|x64
 		{E88B9063-535D-4C94-BA85-2E93BDC443F8}.Release|x64.Build.0 = Release|x64
+		{4BDE7CD3-560C-4D31-8F80-63B4AA94665A}.Debug|x64.ActiveCfg = Debug|x64
+		{4BDE7CD3-560C-4D31-8F80-63B4AA94665A}.Debug|x64.Build.0 = Debug|x64
+		{4BDE7CD3-560C-4D31-8F80-63B4AA94665A}.Release|x64.ActiveCfg = Release|x64
+		{4BDE7CD3-560C-4D31-8F80-63B4AA94665A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -179,6 +185,7 @@ Global
 		{24CF7737-1B13-4C3D-8847-D9661D294FDE} = {433A860F-1EB6-4C5E-907D-A9EE0F7E6B13}
 		{A61A1C0B-D43D-4488-A9B3-4F6763CB3745} = {433A860F-1EB6-4C5E-907D-A9EE0F7E6B13}
 		{E88B9063-535D-4C94-BA85-2E93BDC443F8} = {433A860F-1EB6-4C5E-907D-A9EE0F7E6B13}
+		{4BDE7CD3-560C-4D31-8F80-63B4AA94665A} = {433A860F-1EB6-4C5E-907D-A9EE0F7E6B13}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCE68221-412F-4C91-9524-8A3640C792A5}

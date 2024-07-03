@@ -7,14 +7,10 @@
 #include <String.hpp>
 #include <Component.hpp>
 
-class MyComponent : public eComponent
+class MyComponent expands eComponent
 {
 public:
-	MyComponent();
-	bool Initialize();
-	void Update();
-	void Render();
-	void Unload();
+	defaultinit(MyComponent)
 
 private:
 	eString mMessage;

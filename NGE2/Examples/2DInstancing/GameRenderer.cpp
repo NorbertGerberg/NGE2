@@ -53,7 +53,7 @@ GameRenderer::~GameRenderer()
 void GameRenderer::PreUpdate(bool vsync, uint8 msaa)
 {
 	vec2i size = UpdateSize(mWnd, vsync, msaa);
-	m2DPass->Update(size.x, size.y);
+	m2DPass->Update(size);
 	mGfx->BeginDI();
 }
 
