@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="header">
+      <UniqueIdentifier>{28872f6e-9bfd-4f14-8dc7-ca7a2b22b856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{44378610-5712-40e6-9fca-802ce7249ba1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Alarm.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Doer.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Tags.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Properties.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Module.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="World.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="UniqueMap.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardProperties.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Alarm.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Tags.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Properties.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Doer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Module.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardProperties.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

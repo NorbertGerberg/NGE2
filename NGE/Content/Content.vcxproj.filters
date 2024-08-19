@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{aa4b574b-83b8-45af-bdc6-5e2a792be901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header">
+      <UniqueIdentifier>{65bacc9f-17d9-47fd-891e-5fecde8b2a30}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Asset.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Content.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Package.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Content.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Package.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

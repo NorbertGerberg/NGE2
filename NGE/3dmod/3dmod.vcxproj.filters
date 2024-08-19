@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="header">
+      <UniqueIdentifier>{3d55e568-d624-48ec-a32f-9b49eeb2bdf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{f73dc110-3d84-40d1-b1eb-a71f155f919b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Material.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialPrp.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshContainer.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshVertex.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Material.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
