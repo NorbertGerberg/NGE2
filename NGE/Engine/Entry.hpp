@@ -61,7 +61,7 @@ public:
 			delete mTask;
 			mTask = nullptr;
 		}
-		eConsole::mCmdArg.Clear();
+		eConsole::Clear();
 		eWindow::RELEASE();
 	}
 
