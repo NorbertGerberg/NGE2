@@ -126,6 +126,8 @@ public:
 	void ApplyScissor();
 	void ResetScissor();
 
+	static eString mDevShaderDir;
+
 private:
 	bgfx::Init	mInit;
 	HWND		mHwnd;

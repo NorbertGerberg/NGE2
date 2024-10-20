@@ -41,10 +41,12 @@ public:
 	void ApplyIndexBuffer(const eIndexBufferHandle& handle);
 	void Submit(const bgfx::ViewId& viewID, const bool depth = false);
 	bgfx::ProgramHandle& GetProgram();
-	void InitUniform(strg name, eUniformType type, const uint16 nmb = 1);
-	void SetUniform(strg name, const void* vl, const uint16 nmb = 1);
-	void SetTexture(uint8 stage, strg name, eTexture* texture);
-	eUniform* GetUniform(strg name);
+	void InitUniform(eString name, eUniformType type, const uint16 nmb = 1);
+	void SetUniform(eString name, const void* vl, const uint16 nmb = 1);
+	void SetTexture(uint8 stage, eString name, eTexture* texture);
+	eUniform* GetUniform(eString name);
+
+	static eString			mBaseDir;
 
 private:
 	eProgramHandle			mProgram;

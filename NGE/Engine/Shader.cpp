@@ -6,6 +6,8 @@
 #include <Console.hpp>
 #include "Graphics.hpp"
 
+eString eShader::mBaseDir = "shaders/";
+
 eShader::~eShader()
 {
 	for (auto& it : mUniforms)
@@ -26,9 +28,9 @@ void eShader::LoadShader(eString name)
 	strg shaderPath;
 	switch (bgfx::getRendererType())
 	{
-	case bgfx::RendererType::Direct3D11: {shaderPath = "shaders/d3d/"; } break;
-	case bgfx::RendererType::Direct3D12: {shaderPath = "shaders/d3d/"; } break;
-	case bgfx::RendererType::Vulkan: {shaderPath = "shaders/spirv/"; } break;
+	case bgfx::RendererType::Direct3D11: {shaderPath = mBaseDir.GetStrg() + "d3d/"; } break;
+	case bgfx::RendererType::Direct3D12: {shaderPath = mBaseDir.GetStrg() + "d3d/"; } break;
+	case bgfx::RendererType::Vulkan: {shaderPath = mBaseDir.GetStrg() + "spirv/"; } break;
 	case bgfx::RendererType::Count: { NGE_ASSERT(false, "Error: No valid API."); } break;
 	}
 
@@ -113,12 +115,12 @@ const bgfx::Memory* eShader::GetMem(bx::FileReader& fileReader)
 	return mem;
 }
 
-void eShader::InitUniform(strg name, eUniformType type, const uint16 nmb)
+void eShader::InitUniform(eString name, eUniformType type, const uint16 nmb)
 {
-	mUniforms.push_back({ bgfx::createUniform(name.c_str(), type, nmb), name });
+	mUniforms.push_back({ bgfx::createUniform(name.Get(), type, nmb), name });
 }
 
-void eShader::SetUniform(strg name, const void* vl, const uint16 nmb)
+void eShader::SetUniform(eString name, const void* vl, const uint16 nmb)
 {
 	for (auto& it : mUniforms)
 	{
@@ -130,7 +132,7 @@ void eShader::SetUniform(strg name, const void* vl, const uint16 nmb)
 	}
 }
 
-void eShader::SetTexture(uint8 stage, strg name, eTexture* texture)
+void eShader::SetTexture(uint8 stage, eString name, eTexture* texture)
 {
 	for (auto& it : mUniforms)
 	{
@@ -142,7 +144,7 @@ void eShader::SetTexture(uint8 stage, strg name, eTexture* texture)
 	}
 }
 
-eUniform* eShader::GetUniform(strg name)
+eUniform* eShader::GetUniform(eString name)
 {
 	for (auto& it : mUniforms)
 	{

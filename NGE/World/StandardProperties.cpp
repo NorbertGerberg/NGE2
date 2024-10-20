@@ -166,7 +166,7 @@ eString eStandardProperties::stp_Vec2(void* vl)
 {
 	vec2 _vl = *reinterpret_cast<vec2*>(vl);
 	eString rtVl = eString::ToString(_vl.x);
-	rtVl += TEXT(";") + eString::ToString(_vl.y);
+	rtVl += eTEXT(";") + eString::ToString(_vl.y);
 	return rtVl;
 }
 
@@ -184,8 +184,8 @@ eString eStandardProperties::stp_Vec3(void* vl)
 {
 	vec3 _vl = *reinterpret_cast<vec3*>(vl);
 	eString rtVl = eString::ToString(_vl.x);
-	rtVl += TEXT(";") + eString::ToString(_vl.y);
-	rtVl += TEXT(";") + eString::ToString(_vl.z);
+	rtVl += eTEXT(";") + eString::ToString(_vl.y);
+	rtVl += eTEXT(";") + eString::ToString(_vl.z);
 	return rtVl;
 }
 
@@ -204,9 +204,9 @@ eString eStandardProperties::stp_Vec4(void* vl)
 {
 	vec4 _vl = *reinterpret_cast<vec4*>(vl);
 	eString rtVl = eString::ToString(_vl.x);
-	rtVl += TEXT(";") + eString::ToString(_vl.y);
-	rtVl += TEXT(";") + eString::ToString(_vl.z);
-	rtVl += TEXT(";") + eString::ToString(_vl.w);
+	rtVl += eTEXT(";") + eString::ToString(_vl.y);
+	rtVl += eTEXT(";") + eString::ToString(_vl.z);
+	rtVl += eTEXT(";") + eString::ToString(_vl.w);
 	return rtVl;
 }
 

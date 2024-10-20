@@ -114,16 +114,16 @@ void eWorld::Save(eString outfile)
 	EDR::Archive* archive = EDR::CreateArchive(outfile.Get());
 
 		// Info file
-		eString infOut = TEXT("NGE WORLD FILE\n");
-		infOut += TEXT("EngineVersion=") + eString::ToString(NGE_ENGINE_INFO_VERSION) + TEXT("\n");
-		infOut += TEXT("Compiler=") + TEXT(NGE_COMPILER_NAME) + TEXT("\nCompilerVersion=") + eString::ToString(NGE_COMPILER_VERSION) + TEXT("\n");
+		eString infOut = eTEXT("NGE WORLD FILE\n");
+		infOut += eTEXT("EngineVersion=") + eString::ToString(NGE_ENGINE_INFO_VERSION) + eTEXT("\n");
+		infOut += eTEXT("Compiler=") + eTEXT(NGE_COMPILER_NAME) + eTEXT("\nCompilerVersion=") + eString::ToString(NGE_COMPILER_VERSION) + eTEXT("\n");
 
 		infOut += "<DOERS>\n";
 		for (auto& it : mDoers.Geta())
 		{
 			eString name = it.first;
 			name.Replace(' ', '|');
-			infOut += TEXT("<") + name + TEXT(">\n");
+			infOut += eTEXT("<") + name + eTEXT(">\n");
 		}
 		infOut += "</DOERS>\n";
 
@@ -144,9 +144,9 @@ void eWorld::Save(eString outfile)
 
 			eString objclass = obj->mClassName;
 			objclass.Replace(' ', '|');
-			eString OUT = TEXT("class=") + objclass + TEXT("\n");
+			eString OUT = eTEXT("class=") + objclass + eTEXT("\n");
 
-			OUT += TEXT("<PROPS>\n");
+			OUT += eTEXT("<PROPS>\n");
 			for (auto& prop : obj->Properties().Geta().Geta())
 			{
 				if (!mPropTypes.Find(prop.second.mType))
@@ -156,27 +156,27 @@ void eWorld::Save(eString outfile)
 				}
 				eString pname = prop.first;
 				pname.Replace(' ', '|');
-				OUT += pname + TEXT("=") + mPropTypes[prop.second.mType].mOnSave(prop.second.mValue) + TEXT("\n");
+				OUT += pname + eTEXT("=") + mPropTypes[prop.second.mType].mOnSave(prop.second.mValue) + eTEXT("\n");
 			}
-			OUT += TEXT("</PROPS>\n");
+			OUT += eTEXT("</PROPS>\n");
 
-			OUT += TEXT("<TAGS>\n");
+			OUT += eTEXT("<TAGS>\n");
 			const uint64 tsize = obj->Tags().GetCollection().size();
-			OUT += TEXT("a=") + eString::ToString(tsize) + TEXT("\n");
+			OUT += eTEXT("a=") + eString::ToString(tsize) + eTEXT("\n");
 			for(uint64 i = 0; i < tsize; i++)
 			{
 				auto& tag = obj->Tags().GetCollection()[i];
 				eString fintag = tag;
 				fintag.Replace(' ', '|');
-				OUT += TEXT("t") + eString::ToString(i) + TEXT("=") + fintag + TEXT("\n");
+				OUT += eTEXT("t") + eString::ToString(i) + eTEXT("=") + fintag + eTEXT("\n");
 			}
-			OUT += TEXT("</TAGS>\n");
+			OUT += eTEXT("</TAGS>\n");
 
 			for (auto& it : obj->GetModules().Geta())
 			{
 				eString modname = it.first;
 				modname.Replace(' ', '|');
-				OUT += TEXT("<") + modname + TEXT(">\n");
+				OUT += eTEXT("<") + modname + eTEXT(">\n");
 				for (auto& prop : it.second->Properties().Geta().Geta())
 				{
 					if (!mPropTypes.Find(prop.second.mType))
@@ -186,9 +186,9 @@ void eWorld::Save(eString outfile)
 					}
 					eString pname = prop.first;
 					pname.Replace(' ', '|');
-					OUT += pname + TEXT("=") + mPropTypes[prop.second.mType].mOnSave(prop.second.mValue) + TEXT("\n");
+					OUT += pname + eTEXT("=") + mPropTypes[prop.second.mType].mOnSave(prop.second.mValue) + eTEXT("\n");
 				}
-				OUT += TEXT("</") + modname + TEXT(">\n");
+				OUT += eTEXT("</") + modname + eTEXT(">\n");
 			}
 
 			TMPSVSTOR.push_back(OUT.GetStrg());
@@ -225,16 +225,16 @@ void eWorld::Load(eString filepath, const bool forceload)
 		if (INFENV != NGE_ENGINE_INFO_VERSION)
 		{
 			eConsole::PrintLog("WARNING::eWorld::Load", "World was created using a different engine version that may be incompatible!");
-			eConsole::PrintLine(TEXT("World: v") + eString::ToString(INFENV));
-			eConsole::PrintLine(TEXT("Engine: v") + eString::ToString(NGE_ENGINE_INFO_VERSION));
+			eConsole::PrintLine(eTEXT("World: v") + eString::ToString(INFENV));
+			eConsole::PrintLine(eTEXT("Engine: v") + eString::ToString(NGE_ENGINE_INFO_VERSION));
 		}
 
 		const strg COMPNAME = EDR::GetStringI(INFO, "Compiler");
 		if (COMPNAME != NGE_COMPILER_NAME)
 		{
 			eConsole::PrintLog("ERROR::eWorld::Load", "Invalid runtime library!");
-			eConsole::PrintLine(TEXT("World: ") + COMPNAME);
-			eConsole::PrintLine(TEXT("Engine: ") + TEXT(NGE_COMPILER_NAME));
+			eConsole::PrintLine(eTEXT("World: ") + COMPNAME);
+			eConsole::PrintLine(eTEXT("Engine: ") + eTEXT(NGE_COMPILER_NAME));
 			eConsole::WriteToDisk();
 			archive = EDR::CloseArchive(archive);
 			return;
@@ -244,8 +244,8 @@ void eWorld::Load(eString filepath, const bool forceload)
 		if(COMPV != NGE_COMPILER_VERSION)
 		{
 			eConsole::PrintLog("WARNING::eWorld::Load", "Different compiler version detected!");
-			eConsole::PrintLine(TEXT("World: ") + eString::ToString(COMPV));
-			eConsole::PrintLine(TEXT("Engine: ") + eString::ToString(NGE_COMPILER_VERSION));
+			eConsole::PrintLine(eTEXT("World: ") + eString::ToString(COMPV));
+			eConsole::PrintLine(eTEXT("Engine: ") + eString::ToString(NGE_COMPILER_VERSION));
 		}
 
 		eString _inftmp = INFO;
@@ -257,7 +257,7 @@ void eWorld::Load(eString filepath, const bool forceload)
 		{
 			eString doer_name = EDR::GroupItemNameI(INFO, "DOERS", i);
 			doer_name.Replace('|', '-');
-			EDR::ZSTAT _doer_info = EDR::GetArchiveFileContents(archive, TEXT(doer_name + ".doer").Get());
+			EDR::ZSTAT _doer_info = EDR::GetArchiveFileContents(archive, eTEXT(doer_name + ".doer").Get());
 			strg doer_info(_doer_info.c, _doer_info.size);
 			doer_info = EDR::ReadBinaryToString(doer_info);
 			doer_name.Replace('-', ' ');
@@ -268,7 +268,7 @@ void eWorld::Load(eString filepath, const bool forceload)
 
 			if (!mFactory.ClassExists(classname))
 			{
-				eConsole::PrintLog("ERROR::eWorld::Load", TEXT("Class '") + classname + TEXT("' was not registered!"));
+				eConsole::PrintLog("ERROR::eWorld::Load", eTEXT("Class '") + classname + eTEXT("' was not registered!"));
 				if (!forceload)
 				{
 					eConsole::WriteToDisk();
@@ -327,7 +327,7 @@ void eWorld::Load(eString filepath, const bool forceload)
 
 eString eWorld::OnSave_info()
 {
-	return TEXT("");
+	return eTEXT("");
 }
 
 void eWorld::OnSave(EDR::Archive* archive)

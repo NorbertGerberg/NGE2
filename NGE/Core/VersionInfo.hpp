@@ -3,7 +3,7 @@
 =========================================*/
 #ifndef VERSIONINFO_HPP
 #define VERSIONINFO_HPP
-#define NGE_ENGINE_INFO_VERSION (uint16)200
+#define NGE_ENGINE_INFO_VERSION (uint16)201
 #if defined(__clang__)
 #define NGE_COMPILER_NAME "Clang"
 #define NGE_COMPILER_VERSION __clang_version__

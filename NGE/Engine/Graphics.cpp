@@ -11,6 +11,8 @@
 #include <sstream>
 #include <stdexcept>
 
+eString eGraphics::mDevShaderDir = "development/shaders/";
+
 eGraphics::eGraphics(HWND window, uint32 width, uint32 height, bool vsync, uint8 msaa, eRenderAPI api)
 {
 	mHwnd = window;
@@ -817,16 +819,16 @@ eShaderMsgBack eGraphics::CompileShaderSingle(eString name, bool vk)
 
 	strg fileName = name.GetStrg();
 
-	strg endFile = "shaders/" + rp + "/" + fileName + ".vsb";
-	strg arguments = "-f development/shaders/" + fileName + "/" + fileName + ".vs -o " + endFile + " --type v --platform windows" + rcmd;
+	strg endFile = eShader::mBaseDir.GetStrg() + rp + "/" + fileName + ".vsb";
+	strg arguments = "-f " + mDevShaderDir.GetStrg() + fileName + "/" + fileName + ".vs -o " + endFile + " --type v --platform windows" + rcmd;
 
 	if (EDR::FileExists(endFile.c_str()))
 		EDR::RemoveFile(endFile.c_str());
 
 	strg msg = CompileShaderTask(arguments);
 
-	endFile = "shaders/" + rp + "/" + fileName + ".fsb";
-	arguments = "-f development/shaders/" + fileName + "/" + fileName + ".fs -o " + endFile + " --type f --platform windows" + rcmd;
+	endFile = eShader::mBaseDir.GetStrg() + rp + "/" + fileName + ".fsb";
+	arguments = "-f " + mDevShaderDir.GetStrg() + fileName + "/" + fileName + ".fs -o " + endFile + " --type f --platform windows" + rcmd;
 
 	if (EDR::FileExists(endFile.c_str()))
 		EDR::RemoveFile(endFile.c_str());

@@ -6,7 +6,7 @@
 #include "Types.hpp"
 #include "Base.hpp"
 
-#define TEXT(I) eString(I)
+#define eTEXT(I) eString(I)
 
 //! Simple string class using standard library
 //! \ingroup Core

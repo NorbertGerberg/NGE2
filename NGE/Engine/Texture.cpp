@@ -371,7 +371,7 @@ eString eTexture::CompileDXT(eString inputFile, eString outputFile, uint8 bc, co
 		eConsole::PrintLog("ERROR::eTexture::CompileDXT", "Invalid BC format!");
 		return "ERROR";
 	}
-	eString outcmd = TEXT("texturec.exe -f \"") + inputFile + TEXT("\" -o \"") + outputFile + TEXT("\" -t bc") + eString::ToString(bc);
+	eString outcmd = eTEXT("texturec.exe -f \"") + inputFile + eTEXT("\" -o \"") + outputFile + eTEXT("\" -t bc") + eString::ToString(bc);
 
 	if (isNormalMap) outcmd += " -n";
 	if(mips) outcmd += " -m";
