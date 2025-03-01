@@ -631,7 +631,7 @@ std::vector<strg> EDR::GetFilesInDir(strg dir, const int nt)
 		{
 			if (entry.is_regular_file())
 			{
-				strg pb = entry.path().filename().string();
+				strg pb = entry.path().string();
 				switch (nt)
 				{
 				case 1: {pb = entry.path().stem().string(); }break;
